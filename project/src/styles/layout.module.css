@@ -1,0 +1,13 @@
+.container{
+    max-width: 900px;
+    margin: auto;
+    
+}
+
+.featuredImagWrapper{
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 70/45;
+    margin: 2rem auto;
+}

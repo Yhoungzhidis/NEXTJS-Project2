@@ -1,0 +1,36 @@
+.container{
+    display: flex;
+}
+.menu{
+    flex: 2;
+    background-color: var(--bgSoft);
+    padding: 10px;
+    
+}
+.content{
+    flex: 8;
+    padding: 10px;
+}
+
+.wrapper{
+display: flex;
+gap: 20px;
+margin-top: 20px;
+}
+
+.main{
+flex: 3;
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+.cards{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.side{
+    flex: 1;
+}
