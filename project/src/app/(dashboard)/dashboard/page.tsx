@@ -11,12 +11,12 @@ const page = () => {
       <Card />
       <Card />
     </div>
+    {/* <Chart/> */}
     </div>
     <div className={styles.side}>
       <Rightbar />
       </div>
-        
-   </div> 
+    </div> 
     
   );
 };

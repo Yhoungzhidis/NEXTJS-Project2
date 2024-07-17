@@ -1,17 +1,26 @@
 'use client';
 import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, FieldValues } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const FormSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Invalid email format'),
     password: z.string().min(1, 'Password is required').min(8, 'Password must be at least 8'),
   })
 const SigninForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const router = useRouter();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -20,9 +29,40 @@ const SigninForm = () => {
          }
       });
 
-      const onSubmit = (values:z.infer<typeof FormSchema>) => {
-        console.log(values);
+      const onSubmit = async (values:z.infer<typeof FormSchema>) => {
+        // console.log(values);
+        const signInData = await signIn('credentials',{
+          email: values.email,
+          password: values.password,
+          redirect: false,
+      });
+      
+      if (signInData?.error){
+        console.log("Wrong credentials");
+        
+      } else {
+        router.push('/dashboard');
+        router.refresh();
+      }
+      
       };
+
+      // const handleSignIn = async (e: FieldValues) => {
+      //   e.preventDefault();
+      //   // Implement your sign-in logic here
+      //   // const formData = new FormData(e.currentTarget);
+      //   const res = await signIn("credentials", {
+      //     email: email,
+      //     password: password,
+      //     redirect: false,
+      //   });
+      //   console.log({ res });
+      //   if (!res?.error) {
+      //     router.push("/dashboard/home");
+      //     router.refresh();
+      //   }
+      // };
+
 return (
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
