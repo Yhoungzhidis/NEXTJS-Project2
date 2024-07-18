@@ -23,6 +23,7 @@ const handler = NextAuth({
       if(session.user) {
         session.user.email = token.email as string;
         session.user.name = token.name as string;
+        // session.user.courseCode = token.courseCode as string;
         
       }
       console.log(session);
@@ -35,12 +36,15 @@ const handler = NextAuth({
           credentials: {
             email: {},
             password: {},
+            endpoint: {},
           },
           authorize: async(credentials) => {
+            
           //  console.log({credentials});
            const endpoint = `http://localhost:5050/student?email=${credentials?.email}`;
+
            const response = axios.get(endpoint);
-           
+           console.log(response);
            const rawPassword = (await credentials?.password) || "";
            const match = await bcrypt.compare(
             rawPassword,

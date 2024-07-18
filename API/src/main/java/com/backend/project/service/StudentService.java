@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -34,6 +35,11 @@ public class StudentService {
                 .toList();
 
     }
+    public List<Course> getCoursesByEmail(String email) {
+        return courseRepository.findCoursesByEmail(email).stream()
+                .map(course -> new Course(course.getId(), course.getEmail(), course.getCourseName(), course.getCourseCode(), course.getCourseDescription()))
+                .collect(Collectors.toList());
+    }
 //public List<Student> getStudents(String email){
 //    List<Student> students = studentRepository.findAll();
 //    return students.stream()
@@ -45,10 +51,7 @@ public class StudentService {
         return studentRepository.findByEmail(email)
                 .map(student -> new Student(student.getId(), student.getName(), student.getEmail(), student.getPassword(), student.getStudentid()));
     }
-    public Optional<Course> getCourseByEmail(String email) {
-        return courseRepository.findByEmail(email)
-                .map(course -> new Course(course.getId(), course.getEmail(), course.getCourseName(), course.getCourseCode(), course.getCourseDescription()));
-    }
+
 
 
     public void addNewStudent(Student student) {
@@ -63,9 +66,9 @@ public class StudentService {
     }
 
     public void addNewCourse(Course course) {
-        Optional<Course> studentOptional = courseRepository
-                .findCourseByEmail(course.getEmail());
-        if (studentOptional.isPresent()){
+        List<Course> studentOptional = courseRepository
+                .findCoursesByEmail(course.getEmail());
+        if (studentOptional.isEmpty()){
             courseRepository.save(course);
         }
         courseRepository.save(course);

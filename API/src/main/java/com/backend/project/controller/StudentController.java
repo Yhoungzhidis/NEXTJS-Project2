@@ -36,8 +36,8 @@ public class StudentController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/get/course")
-    public Optional<Course> getCourseByEmail(@RequestParam(value = "email") String email) {
-        return studentService.getCourseByEmail(email);
+    public List<Course> getCourseByEmail(@RequestParam(value = "email") String email) {
+        return studentService.getCoursesByEmail(email);
     }
 
     @CrossOrigin(origins = "*")
