@@ -1,4 +1,4 @@
-import Card from "@/components/dashboard/card/card";
+import Card from "@/components/dashboard/card/Card";
 import styles from "@/components/dashboard.module.css";
 import Rightbar from "@/components/dashboard/rightbar/rightbar";
 
