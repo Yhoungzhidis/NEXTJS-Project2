@@ -5,7 +5,6 @@ package com.backend.project.controller;
 import com.backend.project.service.StudentService;
 import com.backend.project.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +38,12 @@ public class StudentController {
     public void registerNewStudent(@RequestBody Student student){
         studentService.addNewStudent(student);
     }
+
+//    @CrossOrigin(origins = "*")
+//    @PostMapping("/add/course")
+//    public void registerNewCourse(@RequestBody Student student){
+//        studentService.addNewCourse();
+//    }
 
     @DeleteMapping(path = "{Studentid}")
     public void deleteStudent(

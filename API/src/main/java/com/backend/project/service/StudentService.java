@@ -16,11 +16,13 @@ import java.util.Optional;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    
 
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository ) {
         this.studentRepository = studentRepository;
+
     }
 
     public List<Student> getStudents(){
@@ -53,6 +55,16 @@ public class StudentService {
         studentRepository.save(student);
 
     }
+
+//    public void addNewCourse(Student student) {
+//        Optional<Student> studentOptional = studentRepository
+//                .findStudentByEmail(student.getEmail());
+//        if (studentOptional.isPresent()){
+//            throw new IllegalStateException("Email taken");
+//        }
+////        student.setPassword(passwordEncoder.encode(student.getPassword()));
+//        studentRepository.save(student);
+//    }
 
 
     public void deleteStudent(String Studentid) {

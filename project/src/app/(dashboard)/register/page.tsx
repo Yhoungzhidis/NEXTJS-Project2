@@ -1,8 +1,9 @@
+import AddCourse from "@/components/form/AddCourse"
 
 const page = () => {
   return (
     <div>
-      registercourses
+      <AddCourse/>
     </div>
   )
 }

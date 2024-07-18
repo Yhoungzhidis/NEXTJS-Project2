@@ -76,8 +76,8 @@ const Sidebar = () => {
       <div className={styles.user}>
         <Image className={styles.userImage} src="/noavatar.png" alt="" width={50} height={50}/>
         <div className={styles.userDetail}>
-          <span className={styles.username}>{session.user?.email}</span>
-          <span className={styles.userTitle}>Administrator</span>
+          <span className={styles.username}>{session.user?.name}</span>
+          <span className={styles.userTitle}>{session.user?.email}</span>
           </div>
       </div>
       <div className="flex flex-col space-y-10 w-full ">

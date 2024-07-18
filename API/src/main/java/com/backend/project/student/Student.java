@@ -2,6 +2,7 @@ package com.backend.project.student;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table
 public class Student {
@@ -21,6 +22,8 @@ public class Student {
     private String name;
     private String email;
     private String password;
+
+
 
     public Student() {
     }
@@ -91,4 +94,7 @@ public class Student {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+
+
 }
