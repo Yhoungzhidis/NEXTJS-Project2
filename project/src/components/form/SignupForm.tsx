@@ -26,7 +26,7 @@ const FormSchema = z
     message: "Passwords do not match",
   });
 
-  type FormData = z.infer<typeof FormSchema>;
+
 
 const SignupForm = () => {
     const form = useForm<z.infer<typeof FormSchema>>({
