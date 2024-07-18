@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
 import styles from "@/components/dashboard.module.css";
 import Navbar from "@/components/dashboardNavbar/Navbar";
-import SessionWrapper from "@/components/sessionWrapper";
+import SessionWrapper from "@/components/SessionWrapper";
 
 
 

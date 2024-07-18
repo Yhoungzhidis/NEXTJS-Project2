@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import * as z from "zod";
 import { useForm, FieldValues } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
@@ -16,52 +16,36 @@ import { useSession } from "next-auth/react";
 
 const FormSchema = z
 .object({
-    studentid: z.string().min(1, 'Studentid is required').max(8),
-    name: z.string().min(1, 'Name is required').max(20),
-    email: z.string().min(1, 'Email is required').email('Invalid email format'),
-    password: z.string().min(1, 'Password is required').min(8, 'Password must be at least 8'),
-    confirmPassword: z.string().min(1, 'Password confirmation is required'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
+    email: z.string(),
+    courseCode: z.string().min(7, 'Course code is required').max(8),
+    courseName: z.string().min(7, 'Course Name is required').max(25),
+    courseDescription: z.string(),
+    })
 
-  type FormData = z.infer<typeof FormSchema>;
+
 
 const AddCourse = () => {
     const {data:session} = useSession();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            studentid: "",
-            name: "",
             email: "",
-            password: "",
-            confirmPassword: "",
+            courseCode: "",
+            courseName: "",
+            courseDescription: "",
         }
       });
       const router = useRouter();
+      useEffect(() => {
+        if (session) {
+            form.setValue("email", session.user?.email || "");
+        }
+    }, [session, form]);
 
       const onSubmit = async (values:z.infer<typeof FormSchema>) => {
         try {
-          // Prepare data for the API request
-         
-        //   const email = session.user?.email; // Get email from session
-     
-     
-        //   {/* if (!email) {
-        //     console.error("User email is not available in session");
-        //     return;
-        //    }  */}
-      
-        
-          
           const data = {
             ...values, // Spread form data from values
-            // Add any additional data needed by the API (e.g., hashed password)
-            
-            // email: email,
           };
       
           // Send the POST request using axios
@@ -118,12 +102,12 @@ return (
     </>
       <FormField
         control={form.control}
-        name="studentid"
+        name="courseCode"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>ID</FormLabel>
+            <FormLabel>Course code</FormLabel>
             <FormControl>
-              <Input placeholder="studentid" {...field} />
+              <Input placeholder="Course code" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -131,55 +115,33 @@ return (
       />
       <FormField
         control={form.control}
-        name="name"
+        name="courseName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>Course Name</FormLabel>
             <FormControl>
-              <Input placeholder="name" {...field} />
+              <Input placeholder="courseName" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-       
-      <FormField
+         <FormField
         control={form.control}
-        name="password"
+        name="courseDescription"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Password</FormLabel>
+            <FormLabel>Course Description</FormLabel>
             <FormControl>
-              <Input type="password" placeholder="Enter your password" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="confirmPassword"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Re-Enter your password</FormLabel>
-            <FormControl>
-              <Input type="password" placeholder="Re-Enter your password" {...field} />
+              <Input placeholder="Course Description" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
       </div>
-      <Button className="w-full mt-6" type="submit">Sign up</Button>
+      <Button className="w-full mt-6" type="submit">Register</Button>
     </form>
-   
-      
-      <p className='text-center text-sm text-gray-600 mt-2'>
-        Already have an account, please&nbsp;
-        <Link className='text-blue-500 hover:underline' href='/sign-in'>
-          Sign in
-        </Link>
-      </p>
   </Form>
 
 )

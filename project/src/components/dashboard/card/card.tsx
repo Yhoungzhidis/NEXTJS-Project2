@@ -1,8 +1,13 @@
 import { MdSupervisedUserCircle } from "react-icons/md";
 import styles from "@/components/dashboard/card/card.module.css";
+import React from "react";
+
 const card = () => {
+ 
+
   return (
-    <div className={styles.container}>
+   
+       <div className={styles.container}>
       <MdSupervisedUserCircle size={25}/>
       <div className={styles.texts}>
       <span className={styles.titles}>Courses</span>
@@ -12,6 +17,8 @@ const card = () => {
       </span>
       </div>
     </div>
+
+   
   )
 }
 

@@ -3,6 +3,7 @@ package com.backend.project.controller;
 
 
 import com.backend.project.service.StudentService;
+import com.backend.project.student.Course;
 import com.backend.project.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +35,22 @@ public class StudentController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/get/course")
+    public Optional<Course> getCourseByEmail(@RequestParam(value = "email") String email) {
+        return studentService.getCourseByEmail(email);
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/add")
     public void registerNewStudent(@RequestBody Student student){
         studentService.addNewStudent(student);
     }
 
-//    @CrossOrigin(origins = "*")
-//    @PostMapping("/add/course")
-//    public void registerNewCourse(@RequestBody Student student){
-//        studentService.addNewCourse();
-//    }
+    @CrossOrigin(origins = "*")
+    @PostMapping("/add/course")
+    public void registerNewCourse(@RequestBody Course course){
+        studentService.addNewCourse(course);
+    }
 
     @DeleteMapping(path = "{Studentid}")
     public void deleteStudent(

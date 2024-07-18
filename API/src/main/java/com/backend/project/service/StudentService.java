@@ -2,7 +2,9 @@ package com.backend.project.service;
 
 
 
+import com.backend.project.course.CourseRepository;
 import com.backend.project.repository.StudentRepository;
+import com.backend.project.student.Course;
 import com.backend.project.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +18,13 @@ import java.util.Optional;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    
+    private final CourseRepository courseRepository;
 
 
     @Autowired
-    public StudentService(StudentRepository studentRepository ) {
+    public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
-
+        this.courseRepository = courseRepository;
     }
 
     public List<Student> getStudents(){
@@ -43,6 +45,10 @@ public class StudentService {
         return studentRepository.findByEmail(email)
                 .map(student -> new Student(student.getId(), student.getName(), student.getEmail(), student.getPassword(), student.getStudentid()));
     }
+    public Optional<Course> getCourseByEmail(String email) {
+        return courseRepository.findByEmail(email)
+                .map(course -> new Course(course.getId(), course.getEmail(), course.getCourseName(), course.getCourseCode(), course.getCourseDescription()));
+    }
 
 
     public void addNewStudent(Student student) {
@@ -54,6 +60,15 @@ public class StudentService {
 //        student.setPassword(passwordEncoder.encode(student.getPassword()));
         studentRepository.save(student);
 
+    }
+
+    public void addNewCourse(Course course) {
+        Optional<Course> studentOptional = courseRepository
+                .findCourseByEmail(course.getEmail());
+        if (studentOptional.isPresent()){
+            courseRepository.save(course);
+        }
+        courseRepository.save(course);
     }
 
 //    public void addNewCourse(Student student) {
@@ -107,6 +122,7 @@ public class StudentService {
             student.setEmail(email);
         }
     }
+
 
 
 
