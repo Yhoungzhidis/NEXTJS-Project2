@@ -15,6 +15,7 @@ import {
 
 import SidebarItem from "@/components/item";
 import Sidebaritem from "@/components/item";
+import { useSession } from "next-auth/react";
 
 interface Sidebaritem {
   name: string;
@@ -66,12 +67,16 @@ const items: Sidebaritem[] = [
   },
 ];
 const Sidebar = () => {
+  const {data:session} = useSession();
   return (
-    <div className={styles.container}>
+    <>
+    {session ? (
+      <>
+       <div className={styles.container}>
       <div className={styles.user}>
         <Image className={styles.userImage} src="/noavatar.png" alt="" width={50} height={50}/>
         <div className={styles.userDetail}>
-          <span className={styles.username}>Yhoung</span>
+          <span className={styles.username}>{session.user?.email}</span>
           <span className={styles.userTitle}>Administrator</span>
           </div>
       </div>
@@ -83,6 +88,12 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
+      </>
+    ):(
+      <>
+      </>
+    )}
+    </>
   );
 };
 
