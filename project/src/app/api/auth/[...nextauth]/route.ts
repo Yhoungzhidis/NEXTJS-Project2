@@ -58,6 +58,9 @@ const handler = NextAuth({
               studentid: (await response).data.studentid,
               email: (await response).data.email,
               name: (await response).data.name,
+              courseCode: (await response).data.courseCode,
+              courseName: (await response).data.courseName,
+              courseDescription: (await response).data.courseDescription,
             };
           }
           return null;

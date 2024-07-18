@@ -22,7 +22,7 @@ const handler = NextAuth({
     async session({session, token}) {
       if(session.user) {
         session.user.email = token.email as string;
-        session.user.image = token.courseCode as string;
+        session.user.courseCode = token.courseCode as string;
       }
       console.log(session);
       return session;
